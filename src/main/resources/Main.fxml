@@ -12,7 +12,7 @@
     <center>
         <JFXMasonryPane BorderPane.alignment="CENTER">
             <children>
-                <JFXButton buttonType="RAISED" prefHeight="60.0" prefWidth="185.0" style="-fx-background-color: #E51C17; -fx-text-fill: #FFFFFF;" text="Generate Keys">
+                <JFXButton fx:id="generateBtn" buttonType="RAISED" onAction="#onGenerateBtnClick" prefHeight="60.0" prefWidth="185.0" style="-fx-background-color: #E51C17; -fx-text-fill: #FFFFFF;" text="Generate Keys">
                     <font>
                         <Font name="Iosevka Heavy" size="25.0" />
                     </font>
