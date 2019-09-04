@@ -1,6 +1,7 @@
 package com.github.flounder;
 
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
 import java.security.Security;
@@ -13,6 +14,9 @@ import org.bouncycastle.jce.provider.BouncyCastleProvider;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
@@ -69,6 +73,21 @@ public class GenerateController {
 
         // TODO: Create a separate process
         RSAKeyPairGenerator.exportKeyPair(out1, out2, kp, identity, passphrase.toCharArray(), true);
+
+        Parent root;
+        try {
+            root = FXMLLoader.load(getClass().getResource("/KeyViewerView.fxml"));
+            Stage stage = new Stage();
+            stage.setAlwaysOnTop(true);
+            stage.setTitle("Key Viewer");
+            stage.setScene(new Scene(root, 1024, 768));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        Stage stage = (Stage) generateBtn.getScene().getWindow();
+        stage.close();
     }
 
     @FXML
