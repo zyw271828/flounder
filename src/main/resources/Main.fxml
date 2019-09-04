@@ -17,27 +17,27 @@
                         <Font name="Iosevka Heavy" size="25.0" />
                     </font>
                 </JFXButton>
-                <JFXButton buttonType="RAISED" prefHeight="60.0" prefWidth="185.0" style="-fx-background-color: #199B18; -fx-text-fill: #FFFFFF;" text="Encrypt Text">
+                <JFXButton fx:id="encryptTextBtn" buttonType="RAISED" onAction="#onEncryptTextBtnClick" prefHeight="60.0" prefWidth="185.0" style="-fx-background-color: #199B18; -fx-text-fill: #FFFFFF;" text="Encrypt Text">
                     <font>
                         <Font name="Iosevka Heavy" size="25.0" />
                     </font>
                 </JFXButton>
-                <JFXButton buttonType="RAISED" prefHeight="60.0" prefWidth="185.0" style="-fx-background-color: #199B18; -fx-text-fill: #FFFFFF;" text="Encrypt File">
+                <JFXButton fx:id="encryptFileBtn" buttonType="RAISED" onAction="#onEncryptFileBtnClick" prefHeight="60.0" prefWidth="185.0" style="-fx-background-color: #199B18; -fx-text-fill: #FFFFFF;" text="Encrypt File">
                     <font>
                         <Font name="Iosevka Heavy" size="25.0" />
                     </font>
                 </JFXButton>
-                <JFXButton buttonType="RAISED" prefHeight="60.0" prefWidth="185.0" style="-fx-background-color: #0091EA; -fx-text-fill: #FFFFFF;" text="Decrypt Text">
+                <JFXButton fx:id="decryptTextBtn" buttonType="RAISED" onAction="#onDecryptTextBtnClick" prefHeight="60.0" prefWidth="185.0" style="-fx-background-color: #0091EA; -fx-text-fill: #FFFFFF;" text="Decrypt Text">
                     <font>
                         <Font name="Iosevka Heavy" size="25.0" />
                     </font>
                 </JFXButton>
-                <JFXButton buttonType="RAISED" prefHeight="60.0" prefWidth="185.0" style="-fx-background-color: #0091EA; -fx-text-fill: #FFFFFF;" text="Decrypt File">
+                <JFXButton fx:id="decryptFileBtn" buttonType="RAISED" onAction="#onDecryptFileBtnClick" prefHeight="60.0" prefWidth="185.0" style="-fx-background-color: #0091EA; -fx-text-fill: #FFFFFF;" text="Decrypt File">
                     <font>
                         <Font name="Iosevka Heavy" size="25.0" />
                     </font>
                 </JFXButton>
-                <JFXButton buttonType="RAISED" prefHeight="60.0" prefWidth="185.0" style="-fx-background-color: #9C1BB0; -fx-text-fill: #FFFFFF;" text="Exit">
+                <JFXButton fx:id="exitBtn" buttonType="RAISED" onAction="#onExitBtnClick" prefHeight="60.0" prefWidth="185.0" style="-fx-background-color: #9C1BB0; -fx-text-fill: #FFFFFF;" text="Exit">
                     <font>
                         <Font name="Iosevka Heavy" size="25.0" />
                     </font>
