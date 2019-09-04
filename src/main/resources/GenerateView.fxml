@@ -39,14 +39,14 @@
             <center>
                 <BorderPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                     <left>
-                        <JFXButton buttonType="RAISED" prefHeight="64.0" prefWidth="160.0" style="-fx-background-color: #0091EA; -fx-text-fill: #FFFFFF;" text="Generate">
+                        <JFXButton fx:id="generateBtn" buttonType="RAISED" defaultButton="true" onAction="#onGenerateBtnClick" prefHeight="64.0" prefWidth="160.0" style="-fx-background-color: #0091EA; -fx-text-fill: #FFFFFF;" text="Generate">
                             <font>
                                 <Font name="Iosevka Heavy" size="25.0" />
                             </font>
                         </JFXButton>
                     </left>
                     <right>
-                        <JFXButton buttonType="RAISED" prefHeight="64.0" prefWidth="160.0" style="-fx-background-color: #0091EA; -fx-text-fill: #FFFFFF;" text="Cancel">
+                        <JFXButton fx:id="cancelBtn" buttonType="RAISED" cancelButton="true" onAction="#onCancelBtnClick" prefHeight="64.0" prefWidth="160.0" style="-fx-background-color: #0091EA; -fx-text-fill: #FFFFFF;" text="Cancel">
                             <font>
                                 <Font name="Iosevka Heavy" size="25.0" />
                             </font>
@@ -67,22 +67,22 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             </rowConstraints>
             <children>
-                <Label text="Identity:">
+                <Label fx:id="identityLabel" text="Identity:">
                     <font>
                         <Font name="Iosevka" size="25.0" />
                     </font>
                 </Label>
-                <JFXTextField focusColor="#0091ea" GridPane.columnIndex="1">
+                <JFXTextField fx:id="identityField" focusColor="#0091EA" GridPane.columnIndex="1">
                     <font>
                         <Font name="Iosevka" size="25.0" />
                     </font>
                 </JFXTextField>
-                <Label text="Passphrase:" GridPane.rowIndex="1">
+                <Label fx:id="passphraseLabel" text="Passphrase:" GridPane.rowIndex="1">
                     <font>
                         <Font name="Iosevka" size="25.0" />
                     </font>
                 </Label>
-                <JFXPasswordField focusColor="#0091ea" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                <JFXPasswordField fx:id="passphraseField" focusColor="#0091EA" GridPane.columnIndex="1" GridPane.rowIndex="1">
                     <font>
                         <Font name="Iosevka" size="25.0" />
                     </font>
