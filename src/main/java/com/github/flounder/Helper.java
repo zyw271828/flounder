@@ -19,8 +19,8 @@ public class Helper {
             fileChooser.setTitle("Save " + description);
             fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
             fileChooser.getExtensionFilters()
-                    .addAll(new FileChooser.ExtensionFilter(extension + "file", "*." + extension));
-            fileChooser.setInitialFileName("*." + extension);
+                    .addAll(new FileChooser.ExtensionFilter(extension + " file", "*." + extension));
+            fileChooser.setInitialFileName(description + "." + extension);
 
             File targetFile = null;
             targetFile = fileChooser.showSaveDialog(window);
@@ -37,5 +37,21 @@ public class Helper {
             }
         }
         return isSuccess;
+    }
+
+    public File chooseFile(String extension, String description, Window window) {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Choose " + description);
+        fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
+        fileChooser.getExtensionFilters()
+                .addAll(new FileChooser.ExtensionFilter(extension + " file", "*." + extension));
+
+        File targetFile = null;
+        targetFile = fileChooser.showOpenDialog(window);
+        if (targetFile == null) {
+            return null;
+        } else {
+            return targetFile;
+        }
     }
 }
