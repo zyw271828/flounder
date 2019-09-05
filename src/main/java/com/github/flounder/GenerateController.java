@@ -2,6 +2,8 @@ package com.github.flounder;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
 import java.security.Security;
@@ -13,6 +15,7 @@ import com.jfoenix.controls.JFXTextField;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -20,6 +23,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 public class GenerateController {
 
@@ -81,6 +85,17 @@ public class GenerateController {
             stage.setAlwaysOnTop(true);
             stage.setTitle("Key Viewer");
             stage.setScene(new Scene(root, 1024, 768));
+            stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+                @Override
+                public void handle(WindowEvent event) {
+                    try {
+                        Files.deleteIfExists(Paths.get("pub.asc"));
+                        Files.deleteIfExists(Paths.get("sec.asc"));
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
