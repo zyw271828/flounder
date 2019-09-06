@@ -1,6 +1,7 @@
 package com.github.flounder;
 
 import java.io.File;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.security.Security;
 
@@ -149,6 +150,8 @@ public class DecryptController {
                         passphraseLabel.setTextFill(Color.web("#E51C17"));
                     }
                     return;
+                } catch (IOException e) {
+                    fileLabel.setTextFill(Color.web("#E51C17"));
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
