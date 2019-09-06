@@ -9,7 +9,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Window;
 
 public class Helper {
-    public boolean saveFile(File file, String extension, String description, Window window) {
+    public boolean saveFile(File file, String name, String extension, String description, Window window) {
         boolean isSuccess = false;
 
         if (file == null) {
@@ -20,7 +20,7 @@ public class Helper {
             fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
             fileChooser.getExtensionFilters()
                     .addAll(new FileChooser.ExtensionFilter(extension + " file", "*." + extension));
-            fileChooser.setInitialFileName(description + "." + extension);
+            fileChooser.setInitialFileName(name + "." + extension);
 
             File targetFile = null;
             targetFile = fileChooser.showSaveDialog(window);
@@ -28,7 +28,7 @@ public class Helper {
                 return false;
             } else { // Write file to targetFile, set isSuccess
                 try {
-                    Files.copy(file.toPath(), targetFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+                    Files.move(file.toPath(), targetFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
                     isSuccess = true;
                 } catch (IOException e) {
                     isSuccess = false;

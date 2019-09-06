@@ -38,46 +38,95 @@ public class MainController {
 
     @FXML
     void onGenerateBtnClick(ActionEvent event) {
-        showStage("GenerateView", "Generate Keys", 600, 400);
+        Parent root;
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/" + "GenerateView" + ".fxml"));
+            root = loader.load();
+            Stage stage = new Stage();
+            stage.setAlwaysOnTop(true);
+            stage.setTitle("Generate Keys");
+            stage.setScene(new Scene(root, 600, 400));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
     void onEncryptTextBtnClick(ActionEvent event) {
-        showStage("EncryptView", "Encrypt Text", 1024, 768);
+        Parent root;
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/" + "EncryptView" + ".fxml"));
+            root = loader.load();
+            Stage stage = new Stage();
+            stage.setAlwaysOnTop(true);
+            stage.setTitle("Encrypt Text");
+            stage.setScene(new Scene(root, 1024, 768));
+            EncryptController controller = loader.<EncryptController>getController();
+            controller.initData("Encrypt Text");
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
     void onEncryptFileBtnClick(ActionEvent event) {
-        showStage("EncryptView", "Encrypt File", 1024, 768);
+        Parent root;
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/" + "EncryptView" + ".fxml"));
+            root = loader.load();
+            Stage stage = new Stage();
+            stage.setAlwaysOnTop(true);
+            stage.setTitle("Encrypt File");
+            stage.setScene(new Scene(root, 1024, 768));
+            EncryptController controller = loader.<EncryptController>getController();
+            controller.initData("Encrypt File");
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
     void onDecryptTextBtnClick(ActionEvent event) {
-        showStage("DecryptView", "Decrypt Text", 1024, 768);
+        Parent root;
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/" + "DecryptView" + ".fxml"));
+            root = loader.load();
+            Stage stage = new Stage();
+            stage.setAlwaysOnTop(true);
+            stage.setTitle("Decrypt Text");
+            stage.setScene(new Scene(root, 1024, 768));
+            DecryptController controller = loader.<DecryptController>getController();
+            controller.initData("Decrypt Text");
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
     void onDecryptFileBtnClick(ActionEvent event) {
-        showStage("DecryptView", "Decrypt File", 1024, 768);
+        Parent root;
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/" + "DecryptView" + ".fxml"));
+            root = loader.load();
+            Stage stage = new Stage();
+            stage.setAlwaysOnTop(true);
+            stage.setTitle("Decrypt File");
+            stage.setScene(new Scene(root, 1024, 768));
+            DecryptController controller = loader.<DecryptController>getController();
+            controller.initData("Decrypt File");
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
     void onExitBtnClick(ActionEvent event) {
         Stage stage = (Stage) exitBtn.getScene().getWindow();
         stage.close();
-    }
-
-    private void showStage(String viewName, String stageTitle, double width, double height) {
-        Parent root;
-        try {
-            root = FXMLLoader.load(getClass().getResource("/" + viewName + ".fxml"));
-            Stage stage = new Stage();
-            stage.setAlwaysOnTop(true);
-            stage.setTitle(stageTitle);
-            stage.setScene(new Scene(root, width, height));
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 }

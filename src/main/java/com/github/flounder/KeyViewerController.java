@@ -47,8 +47,8 @@ public class KeyViewerController {
         File privateKey = new File("sec.asc");
 
         Helper helper = new Helper();
-        helper.saveFile(publicKey, "asc", "Public Key", saveBtn.getScene().getWindow());
-        helper.saveFile(privateKey, "asc", "Private Key", saveBtn.getScene().getWindow());
+        helper.saveFile(publicKey, "pub", "asc", "Public Key", saveBtn.getScene().getWindow());
+        helper.saveFile(privateKey, "sec", "asc", "Private Key", saveBtn.getScene().getWindow());
     }
 
     @FXML
