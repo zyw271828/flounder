@@ -103,7 +103,15 @@ public class EncryptController {
             } else {
                 textLabel.setTextFill(Color.BLACK);
 
-                // TODO: Encrypt Text
+                try {
+                    // FIXME: Create a separate process
+                    textArea.setText(KeyBasedTextProcessor.encryptText(text, key));
+                } catch (PGPException e) {
+                    keyLabel.setTextFill(Color.web("#E51C17"));
+                    return;
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         } else if (textLabel.getTextFill().equals(Color.GRAY)) { // Encrypt File
             if (file.equals("")) {
@@ -117,6 +125,7 @@ public class EncryptController {
                 String fileName = new File(file).getName();
 
                 try {
+                    // FIXME: Create a separate process
                     KeyBasedFileProcessor.encryptFile(fileName + ".bpg", file, key, false, true);
 
                     Helper helper = new Helper();

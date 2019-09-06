@@ -118,7 +118,23 @@ public class DecryptController {
             } else {
                 textLabel.setTextFill(Color.BLACK);
 
-                // TODO: Decrypt Text
+                try {
+                    // FIXME: Create a separate process
+                    textArea.setText(KeyBasedTextProcessor.decryptText(text, key, passphrase));
+                } catch (PGPException e) {
+                    if (e.toString().contains("PGPSecretKeyRing expected")) {
+                        keyLabel.setTextFill(Color.web("#E51C17"));
+                        passphraseLabel.setTextFill(Color.BLACK);
+                    } else {
+                        keyLabel.setTextFill(Color.BLACK);
+                        passphraseLabel.setTextFill(Color.web("#E51C17"));
+                    }
+                    return;
+                } catch (IOException e) {
+                    fileLabel.setTextFill(Color.web("#E51C17"));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         } else if (textLabel.getTextFill().equals(Color.GRAY)) { // Decrypt File
             if (file.equals("")) {
@@ -132,6 +148,7 @@ public class DecryptController {
                 String originalName = new File(file).getName().substring(0, new File(file).getName().length() - 4);
 
                 try {
+                    // FIXME: Create a separate process
                     KeyBasedFileProcessor.decryptFile(file, key, passphrase.toCharArray(), originalName);
 
                     Helper helper = new Helper();

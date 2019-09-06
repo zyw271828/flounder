@@ -71,11 +71,10 @@ public class GenerateController {
         kpg.initialize(4096);
         KeyPair kp = kpg.generateKeyPair();
 
-        // TODO: Custom file output path
         FileOutputStream out1 = new FileOutputStream("sec.asc");
         FileOutputStream out2 = new FileOutputStream("pub.asc");
 
-        // TODO: Create a separate process
+        // FIXME: Create a separate process
         RSAKeyPairGenerator.exportKeyPair(out1, out2, kp, identity, passphrase.toCharArray(), true);
 
         Parent root;
