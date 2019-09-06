@@ -51,18 +51,14 @@ public class GenerateController {
         String identity = identityField.getText();
         String passphrase = passphraseField.getText();
 
-        // FIXME: Color change is incorrect
+        identityLabel.setTextFill(Color.BLACK);
+        passphraseLabel.setTextFill(Color.BLACK);
         if (identity.equals("")) {
             identityLabel.setTextFill(Color.web("#E51C17"));
             return;
-        } else {
-            identityLabel.setTextFill(Color.BLACK);
-        }
-        if (passphrase.equals("")) {
+        } else if (passphrase.equals("")) {
             passphraseLabel.setTextFill(Color.web("#E51C17"));
             return;
-        } else {
-            identityLabel.setTextFill(Color.BLACK);
         }
 
         Security.addProvider(new BouncyCastleProvider());
