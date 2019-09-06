@@ -89,6 +89,8 @@ public class EncryptController {
         String text = textArea.getText();
         String file = fileTextField.getText();
 
+        keyLabel.setTextFill(Color.BLACK);
+
         if (key.equals("")) {
             keyLabel.setTextFill(Color.web("#E51C17"));
             return;
@@ -99,6 +101,8 @@ public class EncryptController {
                 textLabel.setTextFill(Color.web("#E51C17"));
                 return;
             } else {
+                textLabel.setTextFill(Color.BLACK);
+
                 // TODO: Encrypt Text
             }
         } else if (textLabel.getTextFill().equals(Color.GRAY)) { // Encrypt File
@@ -106,20 +110,23 @@ public class EncryptController {
                 fileLabel.setTextFill(Color.web("#E51C17"));
                 return;
             } else {
+                fileLabel.setTextFill(Color.BLACK);
+
                 Security.addProvider(new BouncyCastleProvider());
 
+                String fileName = new File(file).getName();
+
                 try {
-                    KeyBasedFileProcessor.encryptFile(file + ".bpg", file, key, false, true);
+                    KeyBasedFileProcessor.encryptFile(fileName + ".bpg", file, key, false, true);
 
                     Helper helper = new Helper();
-                    File outputFile = new File(file + ".bpg");
-                    helper.saveFile(outputFile, new File(file).getName(), "bpg", "Output File",
-                            encryptBtn.getScene().getWindow());
+                    File outputFile = new File(fileName + ".bpg");
+                    helper.saveFile(outputFile, fileName, "bpg", "Output File", encryptBtn.getScene().getWindow());
 
                     Files.deleteIfExists(outputFile.toPath());
                 } catch (PGPException e) {
-                    // TODO: Show "PGPSecretKeyRing found where PGPPublicKeyRing expected"
-                    e.printStackTrace();
+                    keyLabel.setTextFill(Color.web("#E51C17"));
+                    return;
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

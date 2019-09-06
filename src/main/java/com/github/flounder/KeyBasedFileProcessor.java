@@ -34,7 +34,7 @@ import org.bouncycastle.util.io.Streams;
 
 public class KeyBasedFileProcessor {
     public static void decryptFile(String inputFileName, String keyFileName, char[] passwd, String defaultFileName)
-            throws IOException, NoSuchProviderException {
+            throws IOException, NoSuchProviderException, PGPException {
         InputStream in = new BufferedInputStream(new FileInputStream(inputFileName));
         InputStream keyIn = new BufferedInputStream(new FileInputStream(keyFileName));
         decryptFile(in, keyIn, passwd, defaultFileName);
@@ -43,7 +43,7 @@ public class KeyBasedFileProcessor {
     }
 
     public static void decryptFile(InputStream in, InputStream keyIn, char[] passwd, String defaultFileName)
-            throws IOException, NoSuchProviderException {
+            throws IOException, NoSuchProviderException, PGPException {
         in = PGPUtil.getDecoderStream(in);
 
         try {
@@ -118,10 +118,7 @@ public class KeyBasedFileProcessor {
                 System.err.println("no message integrity check");
             }
         } catch (PGPException e) {
-            System.err.println(e);
-            if (e.getUnderlyingException() != null) {
-                e.getUnderlyingException().printStackTrace();
-            }
+            throw e;
         }
     }
 
