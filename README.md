@@ -25,3 +25,13 @@ Note: flounder requires at least Java 11 to compile and run.
 | Cryptography library    | Bouncy Castle       |
 | Project management tool | Apache Maven        |
 | IDE                     | Visual Studio Code  |
+
+## Screenshots
+
+<p align="center"><img src="./res/img/main.png" width="400"/></p>
+
+<p align="center"><img src="./res/img/key_viewer.png" width="512"></p>
+
+<p align="center"><img src="./res/img/encrypt_text.png" width="512"></p>
+
+<p align="center"><img src="./res/img/encrypt_text_res.png" width="512"></p>
