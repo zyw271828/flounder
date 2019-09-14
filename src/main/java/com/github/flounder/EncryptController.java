@@ -1,6 +1,7 @@
 package com.github.flounder;
 
 import java.io.File;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.security.Security;
 
@@ -11,6 +12,8 @@ import com.jfoenix.controls.JFXTextField;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.bouncycastle.openpgp.PGPException;
 
+import javafx.application.Platform;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -104,7 +107,6 @@ public class EncryptController {
                 textLabel.setTextFill(Color.BLACK);
 
                 try {
-                    // FIXME: Create a separate process
                     textArea.setText(KeyBasedTextProcessor.encryptText(text, key));
                 } catch (PGPException e) {
                     keyLabel.setTextFill(Color.web("#E51C17"));
@@ -124,21 +126,42 @@ public class EncryptController {
 
                 String fileName = new File(file).getName();
 
-                try {
-                    // FIXME: Create a separate process
-                    KeyBasedFileProcessor.encryptFile(fileName + ".bpg", file, key, false, true);
+                encryptBtn.setDisable(true);
+                cancelBtn.setDisable(true);
+                Task<Void> task = new Task<Void>() {
+                    @Override
+                    protected Void call() {
+                        try {
+                            KeyBasedFileProcessor.encryptFile(fileName + ".bpg", file, key, false, true);
 
-                    Helper helper = new Helper();
-                    File outputFile = new File(fileName + ".bpg");
-                    helper.saveFile(outputFile, fileName, "bpg", "Output File", encryptBtn.getScene().getWindow());
+                            Platform.runLater(() -> {
+                                Helper helper = new Helper();
+                                File outputFile = new File(fileName + ".bpg");
+                                helper.saveFile(outputFile, fileName, "bpg", "Output File",
+                                        encryptBtn.getScene().getWindow());
 
-                    Files.deleteIfExists(outputFile.toPath());
-                } catch (PGPException e) {
-                    keyLabel.setTextFill(Color.web("#E51C17"));
-                    return;
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+                                encryptBtn.setDisable(false);
+                                cancelBtn.setDisable(false);
+
+                                try {
+                                    Files.deleteIfExists(outputFile.toPath());
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                            });
+                        } catch (PGPException e) {
+                            Platform.runLater(() -> {
+                                keyLabel.setTextFill(Color.web("#E51C17"));
+                                encryptBtn.setDisable(false);
+                                cancelBtn.setDisable(false);
+                            });
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        return null;
+                    }
+                };
+                new Thread(task).start();
             }
         }
     }
