@@ -14,6 +14,8 @@ import com.jfoenix.controls.JFXTextField;
 
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 
+import javafx.concurrent.Task;
+import javafx.concurrent.WorkerStateEvent;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -51,6 +53,8 @@ public class GenerateController {
         String identity = identityField.getText();
         String passphrase = passphraseField.getText();
 
+        generateBtn.setDisable(true);
+        cancelBtn.setDisable(true);
         identityLabel.setTextFill(Color.BLACK);
         passphraseLabel.setTextFill(Color.BLACK);
         if (identity.equals("")) {
@@ -61,43 +65,57 @@ public class GenerateController {
             return;
         }
 
-        Security.addProvider(new BouncyCastleProvider());
+        Task<Boolean> task = new Task<Boolean>() {
+            @Override
+            protected Boolean call() throws Exception {
+                Security.addProvider(new BouncyCastleProvider());
 
-        KeyPairGenerator kpg = KeyPairGenerator.getInstance("RSA", "BC");
-        kpg.initialize(4096);
-        KeyPair kp = kpg.generateKeyPair();
+                KeyPairGenerator kpg = KeyPairGenerator.getInstance("RSA", "BC");
+                kpg.initialize(4096);
+                KeyPair kp = kpg.generateKeyPair();
 
-        FileOutputStream out1 = new FileOutputStream("sec.asc");
-        FileOutputStream out2 = new FileOutputStream("pub.asc");
+                FileOutputStream out1 = new FileOutputStream("sec.asc");
+                FileOutputStream out2 = new FileOutputStream("pub.asc");
 
-        // FIXME: Create a separate process
-        RSAKeyPairGenerator.exportKeyPair(out1, out2, kp, identity, passphrase.toCharArray(), true);
+                RSAKeyPairGenerator.exportKeyPair(out1, out2, kp, identity, passphrase.toCharArray(), true);
+                return true;
+            }
+        };
 
-        Parent root;
-        try {
-            root = FXMLLoader.load(getClass().getResource("/KeyViewerView.fxml"));
-            Stage stage = new Stage();
-            stage.setAlwaysOnTop(true);
-            stage.setTitle("Key Viewer");
-            stage.setScene(new Scene(root, 1024, 768));
-            stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
-                @Override
-                public void handle(WindowEvent event) {
+        task.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
+            @Override
+            public void handle(WorkerStateEvent wse) {
+                if (task.getValue()) {
+                    Parent root;
                     try {
-                        Files.deleteIfExists(Paths.get("pub.asc"));
-                        Files.deleteIfExists(Paths.get("sec.asc"));
+                        root = FXMLLoader.load(getClass().getResource("/KeyViewerView.fxml"));
+                        Stage stage = new Stage();
+                        stage.setAlwaysOnTop(true);
+                        stage.setTitle("Key Viewer");
+                        stage.setScene(new Scene(root, 1024, 768));
+                        stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+                            @Override
+                            public void handle(WindowEvent event) {
+                                try {
+                                    Files.deleteIfExists(Paths.get("pub.asc"));
+                                    Files.deleteIfExists(Paths.get("sec.asc"));
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        });
+                        stage.show();
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                }
-            });
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
 
-        Stage stage = (Stage) generateBtn.getScene().getWindow();
-        stage.close();
+                    Stage stage = (Stage) generateBtn.getScene().getWindow();
+                    stage.close();
+                }
+            }
+        });
+
+        new Thread(task).start();
     }
 
     @FXML
